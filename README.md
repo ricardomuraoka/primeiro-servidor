@@ -1,6 +1,6 @@
 Projeto realizado para o curso de NodeJS da Puc-PR em parceria com a Visionnaire e Bradesco
 
-Código original do projeto desenvolvido pelo professor Vinius Godoi
+Código original do projeto desenvolvido pelo professor Vinicius Godoi
 
 
 Criar o servidor de autenticação de sua solução utilizando a OpenAPI.
