@@ -1,4 +1,4 @@
-import {getUser, login, postUser, updateUser, delUser, getGroup} from "./service.mjs";
+import {getUser, login, creatingUser, updateUser, delUser, getGroup} from "./service.mjs";
 
 /**
  * @openapi
@@ -100,7 +100,7 @@ export async function get_user(req, res, _) {
 
 export async function create_user(req, res, _) {
   const { login, password, isAdmin } = await(req.body);
-  await postUser(login, password, isAdmin);
+  await creatingUser(login, password, isAdmin);
   return { login, password, isAdmin } ? res.sendStatus(200) : res.sendStatus(400);
 }
 
@@ -167,6 +167,8 @@ export async function update_user(req, res, _) {
  *     responses:
  *       '200':
  *         description: "User deleted"
+ *       '400':
+ *         description: "Bad request"
  *       '404':
  *         description: "User not found"
  *
@@ -182,7 +184,7 @@ export async function delete_user(req, res, _) {
   }
   const deleteSuccess = await delUser(userId);
   if(deleteSuccess){
-    return res.sendStatus(200);
+    return res.json({ message: 'User deleted', deleteSuccess });
   }else{
     return res.sendStatus(400);
   }

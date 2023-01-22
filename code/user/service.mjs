@@ -14,7 +14,7 @@ export async function getUser(id) {
     return loadById(id);
 }
 
-export async function postUser(id, userLogin, userIsAdmin) {
+export async function creatingUser(id, userLogin, userIsAdmin) {
     return createUser(id, userLogin, userIsAdmin);
 }
 
@@ -24,10 +24,16 @@ export async function updateUser(userId, userLogin, userIsAdmin) {
 }
 
 export async function delUser(userId) {
-    if (await deleteUser(userId)) {
-        return true;
+    try {
+        let deletedUser = await deleteUser(userId);
+        if (deletedUser) {
+            return deletedUser;
+        }
+        return false;
+    } catch (error) {
+        console.error("Error deleting user: ", error);
+        throw error;
     }
-    return false;
 }
 
 export async function getGroup() {

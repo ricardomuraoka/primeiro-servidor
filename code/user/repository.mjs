@@ -18,7 +18,12 @@ function formatUser(user) {
 }
 
 export async function loadById(id) {
-    return formatUser(users.find(u => u.id === id));
+    try {
+        return formatUser(users.find(u => u.id === id));
+    } catch (error) {
+        console.error("Error loading user by id: ", error);
+        throw error;
+    }
 }
 
 export async function loadByCredentials(username, password) {
@@ -31,9 +36,14 @@ export async function loadByCredentials(username, password) {
 }
 
 export async function createUser(userLogin, userPass, userIsAdmin) {
-    let id = randomUUID();
-    users.push({id: id, login: userLogin,password: userPass, admin: userIsAdmin })
-    return {id, login: userLogin, admin: userIsAdmin};
+    try {
+        let id = randomUUID();
+        users.push({id: id, login: userLogin,password: userPass, admin: userIsAdmin });
+        return {id, login: userLogin, admin: userIsAdmin};
+    } catch (error) {
+        console.error("Error creating user: ", error);
+        throw error;
+    }
 }
 
 export async function putUser(user, userLogin, userIsAdmin){
@@ -56,11 +66,14 @@ export async function putUser(user, userLogin, userIsAdmin){
 }
 
 export async function deleteUser(user) {
-
-    users = users.filter(item => item.id !== user.id);
-
-    console.log(users);
-    return true;
+    try {
+        let deletedUser = users.find(item => item.id === user.id);
+        users = users.filter(item => item.id !== user.id);
+        return deletedUser;
+    } catch (error) {
+        console.error("Error deleting user: ", error);
+        throw error;
+    }
 }
 
 export async function loadGroup() {
