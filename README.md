@@ -27,4 +27,27 @@ A senha do usuário não deve ser retornada
 
 - [x] GET /info: Retorna um JSON contendo o nome dos alunos do grupo
 
+Technologies used:
+- [x] [Node.js](https://nodejs.org/en/)
+- [x] [JWT](https://jwt.io/)
+- [x] [Express](https://expressjs.com/)
+- [x] [JavaScript](https://www.javascript.com/)
+
+## Installation
+
+Use the package manager [npm](https://www.npmjs.com/) to install the dependencies.
+
+```bash
+npm install
+```
+
+## Usage
+
+```bash
+npm start
+```
+
+
+
+
 
