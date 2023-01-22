@@ -14,10 +14,15 @@ POST /users/login: Permite autenticar o usuário
 GET /users/{id}: Obter informações a respeito do usuário identificado pelo {id}
 
 A senha do usuário não deve ser retornada
+
 - [x] POST /users: Cria um novo usuário
 
-PUT /users/me: Atualiza as informações do usuário. Deve funcionar somente para o usuário autenticado.
+- [x] PUT /users/me: Atualiza as informações do usuário.
 
-DELETE /users/me: Exclui o usuário. Deve funcionar somente para o usuário autenticado.
+- [x] Deve funcionar somente para o usuário autenticado.
 
-GET /info: Retorna um JSON contendo o nome dos alunos do grupo
+- [x] DELETE /users/me: Exclui o usuário. 
+
+- [x] Deve funcionar somente para o usuário autenticado.
+
+- [x] GET /info: Retorna um JSON contendo o nome dos alunos do grupo

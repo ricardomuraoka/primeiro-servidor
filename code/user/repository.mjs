@@ -1,11 +1,19 @@
+import { randomUUID } from 'crypto'
+
 let users = [
-    {id: 1, login:'admin', password: 'admin', admin: true},
-    {id: 2, login:'vinicius', password: 'vinicius', admin: false},
-    {id: 3, login:'guest', password: 'guest', admin: true}
+    {id: randomUUID(), login:'admin', password: 'admin', admin: true},
+    {id: randomUUID(), login:'vinicius', password: 'vinicius', admin: false},
+    {id: randomUUID(), login:'guest', password: 'guest', admin: true}
+];
+
+let group = [
+    {name: "Alexandre Magno Strukoski", email: "alexandre.strukoski@pucpr.edu.br"},
+    {name: "Michel dos Santos Santiago", email: "michel.santiago@pucpr.edu.br"},
+    {name: "Ricardo Muraoka", email: "alexandre.strukoski@pucpr.edu.br"}
 ];
 
 function formatUser(user) {
-    if (!user) return user;    
+    if (!user) return user;
     return {...user, password: undefined};
 }
 
@@ -15,14 +23,46 @@ export async function loadById(id) {
 
 export async function loadByCredentials(username, password) {
     return formatUser(
-        users.find(u => 
-            u.login === username && 
+        users.find(u =>
+            u.login === username &&
             u.password === password
         )
     );
 }
 
-export async function saveUser(userLogin, userPass, userIsAdmin) {
-    let id = users.length + 1;;
-    return {id, login: userLogin, password: userPass, admin: userIsAdmin};
+export async function createUser(userLogin, userPass, userIsAdmin) {
+    let id = randomUUID();
+    users.push({id: id, login: userLogin,password: userPass, admin: userIsAdmin })
+    return {id, login: userLogin, admin: userIsAdmin};
+}
+
+export async function putUser(user, userLogin, userIsAdmin){
+    let data = null;
+
+    users.forEach((el, i) => {
+        if (el.id === user.id) {
+            users[i].login = userLogin;
+            users[i].admin = userIsAdmin;
+
+            data = users[i];
+
+            return true;
+        }
+
+        return false;
+    })
+
+    return data;
+}
+
+export async function deleteUser(user) {
+
+    users = users.filter(item => item.id !== user.id);
+
+    console.log(users);
+    return true;
+}
+
+export async function loadGroup() {
+    return group;
 }

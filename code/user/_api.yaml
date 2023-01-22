@@ -3,9 +3,8 @@ tags:
     description: Authentication routes
   - name: profile
     description: User profile information
-  - name: user
-    description: User creation
-
+  - name: group
+    description: Group information
 
 components:
   schemas:
@@ -17,12 +16,12 @@ components:
       properties:
         username:
           type: string
-          minLength: 6
+          minLength: 5
           maxLength: 30
-          example: johndoe
+          example: admin
         password:
           type: string
-          example: $3cret!z
+          example: admin
 
     User:
       type: object
@@ -33,21 +32,19 @@ components:
       properties:
         login:
           type: string
-          minLength: 6
+          minLength: 5
           maxLength: 30
-          example: johndoe
+          example: teste
         password:
           type: string
-          example: $3cret!z
+          example: teste
         isAdmin:
           type: boolean
           example: true
 
+
     Id:
-      type: integer
-      format: int32
-      minimum: 1
-      example: 150
+      type: string
 
   parameters:
     Id:
