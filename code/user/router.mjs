@@ -130,6 +130,8 @@ export async function create_user(req, res, _) {
  *         description: "User updated"
  *       '404':
  *         description: "User not found"
+ *       '500':
+ *         description: "Error updating user"
  *
  *     security:
  *       - {}

@@ -53,7 +53,7 @@ export async function putUser(user, userLogin, userIsAdmin) {
         if (index === -1) {
             throw new Error('User not found');
         }
-        users[index] = {...users[index], login: userLogin, admin: userIsAdmin};
+        users[index] = {...users[index], login: userLogin, admin: userIsAdmin, password: undefined};
         return users[index];
     } catch (error) {
         console.error("Error updating user: ", error);
