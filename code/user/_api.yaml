@@ -38,6 +38,23 @@ components:
           type: boolean
           example: true
 
+    CreateUser:
+      type: object
+      required:
+        - login
+        - password
+      properties:
+        login:
+          type: string
+          minLength: 5
+          maxLength: 30
+          example: teste
+        password:
+          type: string
+          minLength: 5
+          maxLength: 30
+          example: teste
+
 
     Id:
       type: string

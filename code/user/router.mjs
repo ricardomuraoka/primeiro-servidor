@@ -83,7 +83,7 @@ export async function get_user(req, res, _) {
  *       content:
  *         application/json:
  *           schema:
- *             $ref: "#/components/schemas/User"
+ *             $ref: "#/components/schemas/CreateUser"
  *
  *
  *     responses:
@@ -99,8 +99,8 @@ export async function get_user(req, res, _) {
  */
 
 export async function create_user(req, res, _) {
-  const { login, password, isAdmin } = await(req.body);
-  let user = await creatingUser(login, password, isAdmin);
+  const { login, password } = await(req.body);
+  let user = await creatingUser(login, password);
   return user ? res.json({ message: 'User created', user }) : res.sendStatus(400);
 }
 
