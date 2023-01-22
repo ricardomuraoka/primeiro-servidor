@@ -47,23 +47,18 @@ export async function createUser(userLogin, userPass, userIsAdmin) {
     }
 }
 
-export async function putUser(user, userLogin, userIsAdmin){
-    let data = null;
-
-    users.forEach((el, i) => {
-        if (el.id === user.id) {
-            users[i].login = userLogin;
-            users[i].admin = userIsAdmin;
-
-            data = users[i];
-
-            return true;
+export async function putUser(user, userLogin, userIsAdmin) {
+    try {
+        const index = users.findIndex(el => el.id === user.id);
+        if (index === -1) {
+            throw new Error('User not found');
         }
-
-        return false;
-    })
-
-    return data;
+        users[index] = {...users[index], login: userLogin, admin: userIsAdmin};
+        return users[index];
+    } catch (error) {
+        console.error("Error updating user: ", error);
+        throw error;
+    }
 }
 
 export async function deleteUser(user) {

@@ -137,16 +137,17 @@ export async function create_user(req, res, _) {
  */
 
 export async function update_user(req, res, _) {
-  const userId = await getUser(req.user.id);
-  if (!userId) {
-    return res.sendStatus(404); //user not found
-  }
-  const { login, password, admin } = req.body;
-  const updateSuccess = await updateUser(userId, login, password, admin);
-  if(updateSuccess){
-    return res.sendStatus(200);
-  }else{
-    return res.sendStatus(400);
+  try {
+    const userId = await getUser(req.user.id);
+    if (!userId) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    let { login, isAdmin } = req.body;
+    const updatedUser = await updateUser(userId, login, isAdmin);
+    return res.status(200).json({ message: 'User updated', updatedUser });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Error updating user' });
   }
 }
 

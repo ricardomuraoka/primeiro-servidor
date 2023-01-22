@@ -27,16 +27,12 @@ components:
       type: object
       required:
         - login
-        - password
         - isAdmin
       properties:
         login:
           type: string
           minLength: 5
           maxLength: 30
-          example: teste
-        password:
-          type: string
           example: teste
         isAdmin:
           type: boolean

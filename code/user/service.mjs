@@ -18,9 +18,9 @@ export async function creatingUser(userLogin, userPass, userIsAdmin) {
     return createUser(userLogin, userPass, userIsAdmin);
 }
 
-export async function updateUser(userId, userLogin, userIsAdmin) {
-    let user = putUser(userId, userLogin, userIsAdmin);
-    return user;
+export async function updateUser(user, userLogin, userIsAdmin) {
+    console.log(userIsAdmin);
+    return await putUser(user, userLogin, userIsAdmin);
 }
 
 export async function delUser(userId) {
