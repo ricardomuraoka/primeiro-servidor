@@ -43,6 +43,7 @@ components:
       required:
         - login
         - password
+        - isAdmin
       properties:
         login:
           type: string
@@ -54,6 +55,9 @@ components:
           minLength: 5
           maxLength: 30
           example: teste
+        isAdmin:
+          type: boolean
+          example: false
 
 
     Id:

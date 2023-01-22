@@ -35,10 +35,10 @@ export async function loadByCredentials(username, password) {
     );
 }
 
-export async function createUser(userLogin, userPass) {
+export async function createUser(userLogin, userPass, userIsAdmin) {
     try {
         let id = randomUUID();
-        let user = {id, login: userLogin, password: userPass, admin: false};
+        let user = {id, login: userLogin, password: userPass, admin: userIsAdmin};
         users.push(user);
         return {...user, password: undefined};
     } catch (error) {
