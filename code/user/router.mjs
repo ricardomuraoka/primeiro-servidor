@@ -100,8 +100,8 @@ export async function get_user(req, res, _) {
 
 export async function create_user(req, res, _) {
   const { login, password, isAdmin } = await(req.body);
-  await creatingUser(login, password, isAdmin);
-  return { login, password, isAdmin } ? res.sendStatus(200) : res.sendStatus(400);
+  let user = await creatingUser(login, password, isAdmin);
+  return user ? res.json({ message: 'User created', user }) : res.sendStatus(400);
 }
 
 /**

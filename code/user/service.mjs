@@ -14,8 +14,8 @@ export async function getUser(id) {
     return loadById(id);
 }
 
-export async function creatingUser(id, userLogin, userIsAdmin) {
-    return createUser(id, userLogin, userIsAdmin);
+export async function creatingUser(userLogin, userPass, userIsAdmin) {
+    return createUser(userLogin, userPass, userIsAdmin);
 }
 
 export async function updateUser(userId, userLogin, userIsAdmin) {
