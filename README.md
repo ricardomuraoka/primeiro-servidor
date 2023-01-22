@@ -26,3 +26,5 @@ A senha do usuário não deve ser retornada
 - [x] Deve funcionar somente para o usuário autenticado.
 
 - [x] GET /info: Retorna um JSON contendo o nome dos alunos do grupo
+
+

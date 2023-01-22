@@ -66,7 +66,7 @@ export async function get_user(req, res, _) {
 /**
  * @openapi
  *
- * /users/create:
+ * /users/users:
  *   post:
  *     summary: "Creates a user"
  *
@@ -196,7 +196,7 @@ export async function delete_user(req, res, _) {
 /**
  * @openapi
  *
- * /users/group:
+ * /users/info:
  *   get:
  *     summary: "Group information"
  *
