@@ -1,4 +1,4 @@
-import { createToken } from "../security.mjs";
+import { createToken } from "../../lib/security.mjs";
 import {loadByCredentials, loadById, putUser, createUser, deleteUser, loadGroup} from "./repository.mjs";
 
 export async function login({username, password}) {
@@ -14,12 +14,12 @@ export async function getUser(id) {
     return loadById(id);
 }
 
-export async function creatingUser(userLogin, userPass, userIsAdmin) {
-    return createUser(userLogin, userPass, userIsAdmin);
+export async function creatingUser(username, name, password ) {
+    return createUser(username, name, password );
 }
 
-export async function updateUser(user, userLogin, userIsAdmin) {
-    return await putUser(user, userLogin, userIsAdmin);
+export async function updateUser(userId, username, name, password ) {
+    return await putUser(userId, username, name, password);
 }
 
 export async function delUser(userId) {
@@ -30,7 +30,7 @@ export async function delUser(userId) {
         }
         return false;
     } catch (error) {
-        console.error("Error deleting user: ", error);
+        console.error("Error deleting users: ", error);
         throw error;
     }
 }

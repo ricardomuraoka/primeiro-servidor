@@ -9,33 +9,46 @@ import OpenApiValidator from 'express-openapi-validator';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import resolver from './esmresolver.mjs';
-import { JWT_SECURITY } from '../security.mjs';
+import { JWT_SECURITY } from '../lib/security.mjs';
+import { bootstrapDb } from '../lib/database.mjs';
+import { isDev } from '../lib/env.mjs';
+import { ServerError } from '../lib/errors.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
 
-app.use(logger('dev'));
+const BASE_PATH = `${__dirname}/../components`;
+
+const MORGAN_FMT = isDev() ? "dev" :
+	":remote-addr :method :url HTTP/:http-version :status :res[content-length] - :response-time ms - :user-agent";
+
+app.use(logger(MORGAN_FMT, {
+	skip: (req, res) => {
+		req.url.includes("healthCheck") && (res.statusCode === 200 || res.statusCode === 304)
+	}
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 const swaggerOptions = {
-    swaggerDefinition: {
-        openapi: "3.0.3",
-        info: {
-            title: "Our very first server",
-            version: "1.0.0",
-            description: "Server Authentication API"
-        },
-        servers: [{
-            url: "http://localhost:3001/api",
-            description: "Our very first server"
-        }]
-    },
-    apis: [
-        __dirname + "/../user/**/*.yaml",
-        __dirname + "/../user/**/*.mjs"
-    ]
+	swaggerDefinition: {
+		openapi: "3.0.3",
+		info: {
+			title: "Music Server",
+			version: "1.0.0",
+			description: "Music Server Authentication API"
+		},
+		servers: [{
+			url: "http://localhost:3001/api",
+			description: "Music Server"
+		}]
+	},
+	apis: [
+		`${BASE_PATH}/**/*.yaml`,
+		`${BASE_PATH}/**/*.mjs`
+	]
 };
 
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
@@ -44,18 +57,21 @@ delete swaggerDocs.channels;
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.use(OpenApiValidator.middleware({
-    apiSpec: swaggerDocs,
-    validateSecurity: {
-        handlers: {
-            JWT: JWT_SECURITY
-        }
-    },
-    operationHandlers: {
-        basePath: __dirname + "/../user",
-        resolver
-    }
+	apiSpec: swaggerDocs,
+	validateSecurity: {
+		handlers: {
+			JWT: JWT_SECURITY
+		}
+	},
+	operationHandlers: {
+		basePath: BASE_PATH,
+		resolver
+	}
 }));
+app.use(ServerError.HANDLERS);
 
 app.use(express.static(`${__dirname}/../public`));
+
+bootstrapDb().catch(console.error);
 
 export default app;

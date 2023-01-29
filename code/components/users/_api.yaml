@@ -18,46 +18,52 @@ components:
           type: string
           minLength: 5
           maxLength: 30
-          example: admin
+          example: JohnDoe
         password:
           type: string
-          example: admin
+          example: $ecret!z
 
     User:
       type: object
       required:
-        - login
-        - isAdmin
+        - username
+        - name
+        - password
       properties:
-        login:
+        username:
           type: string
           minLength: 5
           maxLength: 30
-          example: teste
-        isAdmin:
-          type: boolean
-          example: true
+          example: JohnDoe
+        name:
+          type: string
+          minLength: 5
+          maxLength: 30
+          example: Joanna
+        password:
+          type: string
+          example: $ecret!z
 
     CreateUser:
       type: object
       required:
-        - login
+        - username
+        - name
         - password
-        - isAdmin
       properties:
-        login:
+        username:
           type: string
           minLength: 5
           maxLength: 30
-          example: teste
+          example: JohnDoe
+        name:
+          type: string
+          minLength: 5
+          maxLength: 30
+          example: Joanna
         password:
           type: string
-          minLength: 5
-          maxLength: 30
-          example: teste
-        isAdmin:
-          type: boolean
-          example: false
+          example: $ecret!z
 
 
     Id:

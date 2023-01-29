@@ -23,7 +23,7 @@ export function createToken(user) {
         user: {
             id: user.id,
             login: user.login,
-            roles: user.admin ? ['ADMIN', 'USER'] : ['USER']
+            roles: user.roles.map(r => r.name)
         }
     }
     return jwt.encode(payload, SECRET);
@@ -84,9 +84,9 @@ export function JWT_SECURITY(req, scopes=[]) {
 
     if (!hasAnyRole(token.user, scopes)) {
         throw {
-            status: 401, 
+            status: 401,
             message: 'Unauthorized' +
-            process.env.NODE_ENV !== 'Production' ? 
+            process.env.NODE_ENV !== 'Production' ?
                 `. Roles: [${token.user.roles}] Needed: [${scopes}]` :''
         }
     }

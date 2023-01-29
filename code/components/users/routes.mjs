@@ -1,16 +1,15 @@
 import {getUser, login, creatingUser, updateUser, delUser, getGroup} from "./service.mjs";
-
 /**
  * @openapi
  * /users/login:
  *   post:
- *     summary: "Logs in the user"
+ *     summary: "Logs in the users"
  *
  *     tags:
  *       - "auth"
  *
  *     operationId: user_login
- *     x-eov-operation-handler: router
+ *     x-eov-operation-handler: users/routes
  *
  *     requestBody:
  *       description: Login information
@@ -38,17 +37,17 @@ export async function user_login(req, res, _) {
  *
  * /users/me:
  *   get:
- *     summary: "Retrieves user information"
+ *     summary: "Retrieves users information"
  *
  *     tags:
  *       - "profile"
  *
  *     operationId: get_user
- *     x-eov-operation-handler: router
+ *     x-eov-operation-handler: users/routes
  *
  *     responses:
  *       '200':
- *         description: "Returns the user"
+ *         description: "Returns the users"
  *       '404':
  *         description: "User not found"
  *
@@ -68,14 +67,14 @@ export async function get_user(req, res, _) {
  *
  * /users/users:
  *   post:
- *     summary: "Creates a user"
+ *     summary: "Creates a users"
  *
  *     tags:
  *     - "profile"
  *
  *
  *     operationId: create_user
- *     x-eov-operation-handler: router
+ *     x-eov-operation-handler: users/routes
  *
  *     requestBody:
  *       description: User details
@@ -91,7 +90,7 @@ export async function get_user(req, res, _) {
  *         description: "User created successfully"
  *
  *       '400':
- *         description: "Failed to create user"
+ *         description: "Failed to create users"
  *
  *     security:
  *       - {}
@@ -99,9 +98,9 @@ export async function get_user(req, res, _) {
  */
 
 export async function create_user(req, res, _) {
-  const { login, password, isAdmin } = await(req.body);
-  let user = await creatingUser(login, password, isAdmin);
-  return user ? res.json({ message: 'User created', user }) : res.sendStatus(400);
+  const { username, name, password } = await(req.body);
+  let user = await creatingUser(username, name, password );
+  return user ? res.json({ user }) : res.sendStatus(400);
 }
 
 /**
@@ -109,13 +108,13 @@ export async function create_user(req, res, _) {
  *
  * /users/me:
  *   put:
- *     summary: "Updates user information"
+ *     summary: "Updates users information"
  *
  *     tags:
  *       - "profile"
  *
  *     operationId: update_user
- *     x-eov-operation-handler: router
+ *     x-eov-operation-handler: users/routes
  *
  *     requestBody:
  *       description: Update User details
@@ -131,7 +130,7 @@ export async function create_user(req, res, _) {
  *       '404':
  *         description: "User not found"
  *       '500':
- *         description: "Error updating user"
+ *         description: "Error updating users"
  *
  *     security:
  *       - {}
@@ -144,12 +143,13 @@ export async function update_user(req, res, _) {
     if (!userId) {
       return res.status(404).json({ message: 'User not found' });
     }
-    let { login, isAdmin } = req.body;
-    const updatedUser = await updateUser(userId, login, isAdmin);
+    let id = userId.id;
+    let { username, name, password } = req.body;
+    const updatedUser = await updateUser(id, username, name, password);
     return res.status(200).json({ message: 'User updated', updatedUser });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: 'Error updating user' });
+    return res.status(500).json({ message: 'Error updating users' });
   }
 }
 
@@ -158,13 +158,13 @@ export async function update_user(req, res, _) {
  *
  * /users/me:
  *   delete:
- *     summary: "Delete user information"
+ *     summary: "Delete users information"
  *
  *     tags:
  *       - "profile"
  *
  *     operationId: delete_user
- *     x-eov-operation-handler: router
+ *     x-eov-operation-handler: users/routes
  *
  *
  *     responses:
@@ -183,9 +183,10 @@ export async function update_user(req, res, _) {
 export async function delete_user(req, res, _) {
   const userId = await getUser(req.user.id);
   if (!userId) {
-    return res.sendStatus(404); //user not found
+    return res.sendStatus(404); //users not found
   }
-  const deleteSuccess = await delUser(userId);
+  let id = userId.id;
+  const deleteSuccess = await delUser(id);
   if(deleteSuccess){
     return res.json({ message: 'User deleted', deleteSuccess });
   }else{
@@ -204,7 +205,7 @@ export async function delete_user(req, res, _) {
  *       - "group"
  *
  *     operationId: get_group
- *     x-eov-operation-handler: router
+ *     x-eov-operation-handler: users/routes
  *
  *     responses:
  *       '200':
@@ -217,5 +218,5 @@ export async function delete_user(req, res, _) {
  */
 export async function get_group(req, res, _) {
   const group = await getGroup();
-    return group ? res.json(group) : res.sendStatus(404);
+  return group ? res.json(group) : res.sendStatus(404);
 }
