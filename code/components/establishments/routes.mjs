@@ -96,7 +96,7 @@ export async function get_establishment_by_id(req, res, _) {
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/CreateEstablishment'
+ *             $ref: '#/components/schemas/Establishment'
  *
  *     responses:
  *       '201':
@@ -142,14 +142,7 @@ export async function create_establishment(req, res, _) {
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *               address:
- *                 type: string
- *               description:
- *                 type: string
+ *            $ref: '#/components/schemas/Establishment'
  *
  *     responses:
  *       '200':
@@ -162,7 +155,8 @@ export async function create_establishment(req, res, _) {
  *       - JWT: ['USER']
  */
 export async function update_establishment(req, res, _) {
-	const name = req.params;
+	const { name } = req.params;
+	console.log(name);
 	const data = req.body;
 	const updatedEstablishment = await updateEstablishmentService(name, data);
 	if (!updatedEstablishment) {
