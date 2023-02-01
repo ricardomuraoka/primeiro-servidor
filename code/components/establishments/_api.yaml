@@ -1,0 +1,141 @@
+tags:
+  - name: establishments
+    description: Establishment information
+
+components:
+  schemas:
+    Establishment:
+      type: object
+      properties:
+        name:
+          type: string
+          example: The Big Cafe
+        style:
+          type: string
+          example: Coffee Shop
+        approved:
+          type: boolean
+          example: false
+        verified:
+          type: boolean
+          example: false
+        rating:
+          type: object
+          properties:
+            rating:
+              type: number
+              example: 4.0
+            created_at:
+              type: string
+              example: "2022-01-01T01:00:00.000Z"
+        comments:
+          type: object
+          properties:
+            comment:
+              type: string
+              example: "This place is great!"
+            created_at:
+              type: string
+              example: "2022-01-01T01:00:00.000Z"
+        email:
+          type: string
+          format: email
+          example: thebigcafe@gmail.com
+        phone:
+          type: string
+          example: "555-555-5555"
+        address:
+          type: string
+          example: "123 Main St."
+        city:
+          type: string
+          example: "Seattle"
+        state:
+          type: string
+          example: "WA"
+        zip:
+          type: string
+          example: "98101"
+        website:
+          type: string
+          example: "thebigcafe.com"
+        hours:
+          type: string
+          example: "Mon-Sun: 9AM-9PM"
+
+    CreateEstablishment:
+      type: object
+      properties:
+          name:
+            type: string
+            example: The Big Cafe
+          style:
+            type: string
+            example: Coffee Shop
+          rating:
+            type: number
+            example: 4.0
+          comments:
+            type: string
+            example: "This place is great!"
+          email:
+            type: string
+            example: "greatplaceemail@email.com"
+          phone:
+            type: string
+            example: "+55 (41) 99999-9999"
+          address:
+            type: string
+            example: "123 Main St."
+          city:
+            type: string
+            example: "Curitiba"
+          state:
+            type: string
+            example: "PR"
+          zip:
+            type: string
+            example: "80000-000"
+          website:
+            type: string
+            example: "greatplace.com"
+          open_monday:
+            type: boolean
+            example: false
+          open_tuesday:
+            type: boolean
+            example: true
+          open_wednesday:
+            type: boolean
+            example: true
+          open_thursday:
+            type: boolean
+            example: true
+          open_friday:
+            type: boolean
+            example: true
+          open_saturday:
+            type: boolean
+            example: true
+          open_sunday:
+            type: boolean
+            example: true
+          open:
+            type: string
+            example: "6AM"
+          close:
+            type: string
+            example: "9PM"
+
+    UpdateEstablishment:
+      type: object
+      properties:
+        name:
+          type: string
+          example: The Big Cafe
+        style:
+          type: string
+          example: Coffee Shop
+        approved:
+          type: boolean
+          example: true

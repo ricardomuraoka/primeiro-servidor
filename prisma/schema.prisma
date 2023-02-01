@@ -26,11 +26,35 @@ model Role {
 
 
 model Establishments {
-  id          String    @id @default(uuid())
-  name        String    @unique
-  style       String
-  verified    Boolean
-  rating      Float
-  comments    String
+  id              String    @id @default(uuid())
+  name            String
+  style           String
+  verified        Boolean   @default(false)
+  rating          Float
+  comments        String
+  comment_at      DateTime
+  email           String
+  phone           String
+  address         String
+  city            String
+  state           String
+  zip             String
+  website         String
+  open_monday     Boolean
+  open_tuesday    Boolean
+  open_wednesday  Boolean
+  open_thursday   Boolean
+  open_friday     Boolean
+  open_saturday   Boolean
+  open_sunday     Boolean
+  open            String
+  close           String
+  approved        Boolean   @default(false)
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @default(now())
+  deleted         Boolean   @default(false)
+  deleted_at      DateTime?
+
+  @@unique(fields: [name, approved], name: "approvedEstablishment")
 }
 

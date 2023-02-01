@@ -1,5 +1,6 @@
 import { createToken } from "../../lib/security.mjs";
 import {loadByCredentials, loadById, putUser, createUser, deleteUser, loadGroup} from "./repository.mjs";
+import {newAxios} from "../../lib/network.mjs";
 
 export async function login({username, password}) {
     const user = await loadByCredentials(username, password);
@@ -11,7 +12,16 @@ export async function login({username, password}) {
 }
 
 export async function getUser(id) {
-    return loadById(id);
+    const axios = newAxios();
+    const user = await loadById(id);;
+
+/*
+const todos = await axios.get('https://jsonplaceholder.typicode.com/todos/1');
+if (todos.status === 200) {
+    user.todoList = todos.data;
+}
+*/
+    return user;
 }
 
 export async function creatingUser(username, name, password ) {

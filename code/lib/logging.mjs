@@ -5,10 +5,11 @@ function formatDate(timestamp) {
     return timestamp.toLocaleString();
 }
 
-function shortMsg({origin = pjson.name, level, description, err = null,
+function shortMsg({origin, level, description, err = null,
                       timestamp, logger, ...content}) {
     const src = origin ? `[${origin}] ` : ``;
-    let msg = `[${formatDate(timestamp)}] ${src}${level}: ${description} ${JSON.stringify(content)}`;
+    let msg = `[${formatDate(timestamp)}] ${src}${level}: ${description}`;
+    if (Object.keys(content).size > 0) msg += JSON.stringify(content);
     if (err) {
         if (err.stack) msg += `\n${err.stack}`;
         if (err.errors) msg += `\nErrors: ${JSON.stringify(err.errors, null, 4)}`;
@@ -35,6 +36,14 @@ function register(params) {
 
     if (logger) logger(longMsg(params));
     return false;
+}
+
+export function runAndLog(promise, {origin='Async', onSuccess = info, onError = error} = {}) {
+    return promise.then(r => {
+        const log = {origin, description: 'Success'};
+        if (r) log.result = JSON.stringify(r);
+        onSuccess(log);
+    }).catch(err => onError({origin, description: 'Failure', err}))
 }
 
 export const debug = (params) => register( {level: 'DEBUG', ...params});
