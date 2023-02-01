@@ -32,6 +32,7 @@ Technologies used:
 - [x] [JWT](https://jwt.io/)
 - [x] [Express](https://expressjs.com/)
 - [x] [JavaScript](https://www.javascript.com/)
+- [x] [mysql](https://www.mysql.com/)
 
 ## Installation
 
@@ -40,6 +41,10 @@ Use the package manager [npm](https://www.npmjs.com/) to install the dependencie
 ```bash
 npm install
 ```
+
+## Configuration
+The server runs on port 3001 by default. You can change it in the file `app.mjs`.
+mySQL database connection is configured in the file `prisma.schema`.
 
 ## Usage
 
