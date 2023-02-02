@@ -32,6 +32,7 @@ async function makeAdmin() {
             }
         }
     });
+
     if (exists) {
         debug({description: `Administrator found.`});
         return;
@@ -44,7 +45,7 @@ async function makeAdmin() {
             name: 'Music Server Administrator',
             roles: {
                 connect: [
-                    {name: 'ADMIN'}, {name: 'USER'}
+                    {name: 'ADMIN'}, {name: 'COMMERCIAL'}, {name: 'USER'}
                 ]
             }
         }
@@ -55,6 +56,7 @@ async function makeAdmin() {
 export async function bootstrapDb() {
     debug({description: "Checking initial data..."});
     await makeRole('ADMIN');
+    await makeRole('COMMERCIAL');
     await makeRole('USER');
     await makeAdmin();
     debug({description: "Done!"});

@@ -121,3 +121,21 @@ export async function deleteUser(id) {
 export async function loadGroup() {
     return group;
 }
+
+
+export async function approveAdmin(userName) {
+
+    const user = await prisma.user.update({
+        where: {
+            username: userName,
+        },
+        data: {
+            roles: {
+                connect: [
+                        {name: 'COMMERCIAL'}, {name: 'USER'}
+                ]
+            }
+        },
+    })
+    return user;
+}

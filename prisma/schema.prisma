@@ -27,7 +27,7 @@ model Role {
 
 model Establishments {
   id              String    @id @default(uuid())
-  name            String
+  name            String    @unique
   style           String
   verified        Boolean   @default(false)
   rating          Float
@@ -54,7 +54,5 @@ model Establishments {
   updated_at      DateTime  @default(now())
   deleted         Boolean   @default(false)
   deleted_at      DateTime?
-
-  @@unique(fields: [name, approved], name: "approvedEstablishment")
 }
 

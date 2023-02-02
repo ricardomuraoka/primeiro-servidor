@@ -1,5 +1,5 @@
 import { createToken } from "../../lib/security.mjs";
-import {loadByCredentials, loadById, putUser, createUser, deleteUser, loadGroup} from "./repository.mjs";
+import {loadByCredentials, loadById, putUser, createUser, deleteUser, loadGroup, approveAdmin} from "./repository.mjs";
 import {newAxios} from "../../lib/network.mjs";
 
 export async function login({username, password}) {
@@ -47,5 +47,9 @@ export async function delUser(userId) {
 
 export async function getGroup() {
     return loadGroup();
+}
+
+export async function approveAdminService(userName){
+    return await approveAdmin(userName);
 }
 

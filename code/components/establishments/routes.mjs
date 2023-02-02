@@ -1,7 +1,8 @@
 import {
+	approveEstablishmentService,
 	createEstablishmentService,
 	deleteEstablishmentService,
-	getAllEstablishmentsService,
+	getAllEstablishmentsService, getAllEstablishmentsUnapprovedService,
 	getEstablishmentByNameService,
 	updateEstablishmentService
 } from "./service.mjs";
@@ -105,6 +106,7 @@ export async function get_establishment_by_id(req, res, _) {
  *         description: "Bad request"
  *
  *     security:
+ *       - {}
  *       - JWT: ['USER']
  */
 export async function create_establishment(req, res, _) {
@@ -156,7 +158,6 @@ export async function create_establishment(req, res, _) {
  */
 export async function update_establishment(req, res, _) {
 	const { name } = req.params;
-	console.log(name);
 	const data = req.body;
 	const updatedEstablishment = await updateEstablishmentService(name, data);
 	if (!updatedEstablishment) {
@@ -203,5 +204,74 @@ export async function delete_establishment(req, res, _) {
 		return res.sendStatus(404); //establishment not found
 	}
 	return res.sendStatus(200); //establishment deleted successfully
+}
+
+/**
+ * @openapi
+ *
+ * /commercial/{name}:
+ *   put:
+ *     summary: "Updates an establishment by name"
+ *
+ *     tags:
+ *       - "commercial"
+ *
+ *     operationId: approve_establishment
+ *     x-eov-operation-handler: establishments/routes
+ *
+ *     parameters:
+ *       - name: name
+ *         in: path
+ *         required: true
+ *         description: The name of the establishment to update
+ *         schema:
+ *           type: string
+ *
+ *     responses:
+ *       '200':
+ *         description: "Returns the updated establishment information"
+ *       '404':
+ *         description: "Establishment not found"
+ *
+ *     security:
+ *       - JWT: ['COMMERCIAL']
+ */
+export async function approve_establishment(req, res, _) {
+	const { name } = req.params;
+	const updatedEstablishment = await approveEstablishmentService(name);
+	if (!updatedEstablishment) {
+		return res.sendStatus(404); //establishment not found
+	}
+	return res.json(updatedEstablishment);
+}
+
+/**
+ * @openapi
+ *
+ * /commercial:
+ *   get:
+ *     summary: "Retrieves unapproved establishments' information"
+ *
+ *     tags:
+ *       - "commercial"
+ *
+ *     operationId: get_unapproved_establishments
+ *     x-eov-operation-handler: establishments/routes
+ *
+ *     responses:
+ *       '200':
+ *         description: "Returns establishments information"
+ *       '404':
+ *         description: "Establishments not found"
+ *
+ *     security:
+ *       - JWT: ['COMMERCIAL']
+ */
+export async function get_unapproved_establishments(req, res, _) {
+	const establishments = await getAllEstablishmentsUnapprovedService();
+	if (!establishments) {
+		return res.sendStatus(404); //establishments not found
+	}
+	return res.json(establishments);
 }
 

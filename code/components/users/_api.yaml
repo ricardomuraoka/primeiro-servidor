@@ -5,6 +5,8 @@ tags:
     description: User profile information
   - name: group
     description: Group information
+  - name: admin
+    description: Admin routes
 
 components:
   schemas:

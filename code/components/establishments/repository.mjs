@@ -79,13 +79,13 @@ export async function createEstablishment(establishmentData) {
 			state: establishmentData.state || undefined,
 			zip: establishmentData.zip || undefined,
 			website: establishmentData.website || undefined,
-			open_monday: establishmentData.open_monday || undefined,
-			open_tuesday: establishmentData.open_tuesday || undefined,
-			open_wednesday: establishmentData.open_wednesday || undefined,
-			open_thursday: establishmentData.open_thursday || undefined,
-			open_friday: establishmentData.open_friday || undefined,
-			open_saturday: establishmentData.open_saturday || undefined,
-			open_sunday: establishmentData.open_sunday || undefined,
+			open_monday: establishmentData.open_monday,
+			open_tuesday: establishmentData.open_tuesday,
+			open_wednesday: establishmentData.open_wednesday,
+			open_thursday: establishmentData.open_thursday,
+			open_friday: establishmentData.open_friday,
+			open_saturday: establishmentData.open_saturday,
+			open_sunday: establishmentData.open_sunday,
 			open: establishmentData.open || undefined,
 			close: establishmentData.close || undefined,
 			deleted_at: establishmentData.deleted_at || undefined,
@@ -137,5 +137,27 @@ export async function deleteEstablishment(name) {
 	const establishment = await prisma.establishments.delete({
 		where: { name },
 	})
-	return establishment
+	return establishment;
 }
+
+export async function approveEstablishment(name) {
+	const establishment = await prisma.establishments.update({
+		where: { name },
+		data: {
+			approved: true,
+		},
+	})
+	return establishment;
+}
+
+export async function getAllEstablishmentsUnapproved() {
+	const establishments = await prisma.establishments.findMany({
+		where: {
+			approved: false,
+		}
+	})
+	return establishments;
+}
+
+
+

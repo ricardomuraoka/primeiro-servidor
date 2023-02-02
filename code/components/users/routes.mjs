@@ -1,4 +1,5 @@
-import {getUser, login, creatingUser, updateUser, delUser, getGroup} from "./service.mjs";
+import {getUser, login, creatingUser, updateUser, delUser, getGroup, approveAdminService} from "./service.mjs";
+import {getAllEstablishmentsUnapprovedService} from "../establishments/service.mjs";
 /**
  * @openapi
  * /users/login:
@@ -219,4 +220,44 @@ export async function delete_user(req, res, _) {
 export async function get_group(req, res, _) {
   const group = await getGroup();
   return group ? res.json(group) : res.sendStatus(404);
+}
+
+/**
+ * @openapi
+ *
+ * /admin/{userName}:
+ *   put:
+ *     summary: "Approves commercial users' information"
+ *
+ *     tags:
+ *       - "admin"
+ *
+ *     operationId: approved_commercial_users
+ *     x-eov-operation-handler: users/routes
+ *
+ *     responses:
+ *       '200':
+ *         description: "Returns approves commercial users' information"
+ *       '404':
+ *         description: "Username not found"
+ *
+ *     parameters:
+ *       - name: userName
+ *         in: path
+ *         required: true
+ *         description: The userName of the user to promove
+ *         schema:
+ *           type: string
+ *
+ *     security:
+ *       - JWT: ['ADMIN']
+ */
+export async function approved_commercial_users(req, res, _) {
+
+  const {userName} = req.params;
+    const approved = await approveAdminService(userName);
+  if (!approved) {
+    return res.sendStatus(404); //username not found
+  }
+  return res.json(approved);
 }

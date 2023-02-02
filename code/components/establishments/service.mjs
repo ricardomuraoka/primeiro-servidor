@@ -1,21 +1,36 @@
-import { createEstablishment, deleteEstablishment,getAllEstablishments,getEstablishmentByName,updateEstablishment } from "./repository.mjs";
+import {
+	approveEstablishment,
+	createEstablishment,
+	deleteEstablishment,
+	getAllEstablishments, getAllEstablishmentsUnapproved,
+	getEstablishmentByName,
+	updateEstablishment
+} from "./repository.mjs";
 
 export async function getAllEstablishmentsService() {
-	return await getAllEstablishments()
+	return await getAllEstablishments();
 }
 
-export async function getEstablishmentByNameService(id) {
-	return await getEstablishmentByName(id)
+export async function getEstablishmentByNameService(name) {
+	return await getEstablishmentByName(name);
 }
 
 export async function createEstablishmentService(data) {
-	return await createEstablishment(data)
+	return await createEstablishment(data);
 }
 
-export async function updateEstablishmentService(id, data) {
-	return await updateEstablishment(id, data)
+export async function updateEstablishmentService(name, data) {
+	return await updateEstablishment(name, data);
 }
 
-export async function deleteEstablishmentService(id) {
-	return await deleteEstablishment(id)
+export async function deleteEstablishmentService(name) {
+	return await deleteEstablishment(name);
+}
+
+export async function approveEstablishmentService(name) {
+	return await approveEstablishment(name);
+}
+
+export async function getAllEstablishmentsUnapprovedService() {
+	return await getAllEstablishmentsUnapproved();
 }
