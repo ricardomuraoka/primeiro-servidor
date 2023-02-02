@@ -211,7 +211,7 @@ export async function delete_establishment(req, res, _) {
  *
  * /commercial/{name}:
  *   put:
- *     summary: "Updates an establishment by name"
+ *     summary: "Approves an establishment by name"
  *
  *     tags:
  *       - "commercial"

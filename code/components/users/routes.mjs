@@ -1,5 +1,5 @@
-import {getUser, login, creatingUser, updateUser, delUser, getGroup, approveAdminService} from "./service.mjs";
-import {getAllEstablishmentsUnapprovedService} from "../establishments/service.mjs";
+import {getUser, login, creatingUser, updateUser, delUser, getGroup, promotesUserToCommercialService} from "./service.mjs";
+
 /**
  * @openapi
  * /users/login:
@@ -232,12 +232,12 @@ export async function get_group(req, res, _) {
  *     tags:
  *       - "admin"
  *
- *     operationId: approved_commercial_users
+ *     operationId: promoted_commercial_users
  *     x-eov-operation-handler: users/routes
  *
  *     responses:
  *       '200':
- *         description: "Returns approves commercial users' information"
+ *         description: "Returns promoted User"
  *       '404':
  *         description: "Username not found"
  *
@@ -245,19 +245,19 @@ export async function get_group(req, res, _) {
  *       - name: userName
  *         in: path
  *         required: true
- *         description: The userName of the user to promove
+ *         description: The userName of the user to promote
  *         schema:
  *           type: string
  *
  *     security:
  *       - JWT: ['ADMIN']
  */
-export async function approved_commercial_users(req, res, _) {
+export async function promoted_commercial_users(req, res, _) {
 
   const {userName} = req.params;
-    const approved = await approveAdminService(userName);
+    const approved = await promotesUserToCommercialService(userName);
   if (!approved) {
     return res.sendStatus(404); //username not found
   }
-  return res.json(approved);
+  return res.json({message: `User ${userName} promoted to COMMERCIAL`, approved});
 }

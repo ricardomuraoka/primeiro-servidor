@@ -123,7 +123,7 @@ export async function loadGroup() {
 }
 
 
-export async function approveAdmin(userName) {
+export async function PromotesUserToCommercial(userName) {
 
     const user = await prisma.user.update({
         where: {
