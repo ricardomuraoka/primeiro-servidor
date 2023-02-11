@@ -7,52 +7,60 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url = env("DATABASE_URL")
+  url      = env("DATABASE_URL")
 }
 
-//Models
+// Models
 model User {
-  id          String    @id @default(uuid())
-  username    String    @unique
-  password    String
-  name        String    @default("")
-  roles       Role[]
+  id       String    @id @default(uuid())
+  username String    @unique
+  password String
+  name     String    @default("")
+  roles    Role[]
+  comment  Comment[]
 }
 
 model Role {
-  name        String    @id
-  users       User[]
+  name  String @id
+  users User[]
 }
-
 
 model Establishments {
-  id              String    @id @default(uuid())
-  name            String    @unique
-  style           String
-  verified        Boolean   @default(false)
-  rating          Float
-  comments        String
-  comment_at      DateTime
-  email           String
-  phone           String
-  address         String
-  city            String
-  state           String
-  zip             String
-  website         String
-  open_monday     Boolean
-  open_tuesday    Boolean
-  open_wednesday  Boolean
-  open_thursday   Boolean
-  open_friday     Boolean
-  open_saturday   Boolean
-  open_sunday     Boolean
-  open            String
-  close           String
-  approved        Boolean   @default(false)
-  created_at      DateTime  @default(now())
-  updated_at      DateTime  @default(now())
-  deleted         Boolean   @default(false)
-  deleted_at      DateTime?
+  id             String    @id @default(uuid())
+  name           String    @unique
+  style          String
+  verified       Boolean   @default(false)
+  email          String
+  phone          String
+  address        String
+  city           String
+  state          String
+  zip            String
+  website        String
+  open_monday    Boolean
+  open_tuesday   Boolean
+  open_wednesday Boolean
+  open_thursday  Boolean
+  open_friday    Boolean
+  open_saturday  Boolean
+  open_sunday    Boolean
+  open           String
+  close          String
+  approved       Boolean   @default(false)
+  created_at     DateTime  @default(now())
+  updated_at     DateTime  @default(now())
+  deleted        Boolean   @default(false)
+  deleted_at     DateTime?
+  comment        Comment[]
 }
 
+model Comment {
+  id               String         @id @unique @default(uuid())
+  text             String
+  rating           Float?
+  comment_at       DateTime       @default(now())
+  user             User?          @relation(fields: [userId], references: [id])
+  establishment    Establishments @relation(fields: [establishmentsId], references: [id])
+  userId           String?
+  establishmentsId String
+}

@@ -1,0 +1,15 @@
+tags:
+  - name: comment
+    description: Comment information
+
+components:
+  schemas:
+    Comment:
+      type: object
+      properties:
+        text:
+          type: string
+          example: "This is a comment"
+        rating:
+          type: integer
+          example: 5.0

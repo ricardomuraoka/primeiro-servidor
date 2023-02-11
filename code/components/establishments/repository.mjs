@@ -10,8 +10,6 @@ const ESTABLISHMENTS_FIELDS = {
 	style: true,
 	approved: false,
 	verified: true,
-	rating: true,
-	comments: true,
 	email: true,
 	phone: true,
 	address: true,
@@ -32,6 +30,7 @@ const ESTABLISHMENTS_FIELDS = {
 	updated_at: false,
 	deleted: false,
 	deleted_at: false,
+	comment: false,
 }
 
 // Gets all establishments that HAVE BEEN APPROVED.
@@ -58,20 +57,10 @@ export async function createEstablishment(establishmentData) {
 			.throwIf(getEstablishment, "Establishment already exists", badRequest)
 
 
-	let dateComment;
-	if (establishmentData.comments !== "") {
-		dateComment = establishmentData.comment_at = new Date(Date.now())
-	} else {
-		dateComment = establishmentData.comment_at = null;
-	}
-
 	const establishment = await prisma.establishments.create({
 		data: {
 			name: establishmentData.name,
 			style: establishmentData.style || undefined,
-			rating: establishmentData.rating || undefined,
-			comments: establishmentData.comments || undefined,
-			comment_at: dateComment,
 			email: establishmentData.email || undefined,
 			phone: establishmentData.phone || undefined,
 			address: establishmentData.address || undefined,
@@ -108,9 +97,6 @@ export async function updateEstablishment(name, establishmentData) {
 		data: {
 			name: establishmentData.name,
 			style: establishmentData.style || undefined,
-			rating: establishmentData.rating || undefined,
-			comments: establishmentData.comments || undefined,
-			comment_at: establishmentData.comment_at || undefined,
 			email: establishmentData.email || undefined,
 			phone: establishmentData.phone || undefined,
 			address: establishmentData.address || undefined,

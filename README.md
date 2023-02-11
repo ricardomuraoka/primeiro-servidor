@@ -33,6 +33,7 @@ Technologies used:
 - [x] [Express](https://expressjs.com/)
 - [x] [JavaScript](https://www.javascript.com/)
 - [x] [mysql](https://www.mysql.com/)
+- [x] [Prisma](https://www.prisma.io/)
 
 ## Installation
 
@@ -44,7 +45,13 @@ npm install
 
 ## Configuration
 The server runs on port 3001 by default. You can change it in the file `app.mjs`.
-mySQL database connection is configured in the file `prisma.schema`.
+mySQL database connection is configured in the file `schema.prisma`, it runs on port 3306 by default.
+
+Migrate the database schema with the following command:
+
+```bash
+npx prisma migrate dev
+```
 
 ## Usage
 

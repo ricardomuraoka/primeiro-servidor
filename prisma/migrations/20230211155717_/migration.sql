@@ -22,9 +22,6 @@ CREATE TABLE `Establishments` (
     `name` VARCHAR(191) NOT NULL,
     `style` VARCHAR(191) NOT NULL,
     `verified` BOOLEAN NOT NULL DEFAULT false,
-    `rating` DOUBLE NOT NULL,
-    `comments` VARCHAR(191) NOT NULL,
-    `comment_at` DATETIME(3) NOT NULL,
     `email` VARCHAR(191) NOT NULL,
     `phone` VARCHAR(191) NOT NULL,
     `address` VARCHAR(191) NOT NULL,
@@ -52,6 +49,19 @@ CREATE TABLE `Establishments` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
+CREATE TABLE `Comment` (
+    `id` VARCHAR(191) NOT NULL,
+    `text` VARCHAR(191) NOT NULL,
+    `rating` DOUBLE NULL,
+    `comment_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `userId` VARCHAR(191) NULL,
+    `establishmentsId` VARCHAR(191) NOT NULL,
+
+    UNIQUE INDEX `Comment_id_key`(`id`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
 CREATE TABLE `_RoleToUser` (
     `A` VARCHAR(191) NOT NULL,
     `B` VARCHAR(191) NOT NULL,
@@ -59,6 +69,12 @@ CREATE TABLE `_RoleToUser` (
     UNIQUE INDEX `_RoleToUser_AB_unique`(`A`, `B`),
     INDEX `_RoleToUser_B_index`(`B`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- AddForeignKey
+ALTER TABLE `Comment` ADD CONSTRAINT `Comment_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Comment` ADD CONSTRAINT `Comment_establishmentsId_fkey` FOREIGN KEY (`establishmentsId`) REFERENCES `Establishments`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `_RoleToUser` ADD CONSTRAINT `_RoleToUser_A_fkey` FOREIGN KEY (`A`) REFERENCES `Role`(`name`) ON DELETE CASCADE ON UPDATE CASCADE;

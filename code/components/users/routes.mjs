@@ -134,7 +134,6 @@ export async function create_user(req, res, _) {
  *         description: "Error updating users"
  *
  *     security:
- *       - {}
  *       - JWT: ['USER']
  */
 
@@ -227,7 +226,7 @@ export async function get_group(req, res, _) {
  *
  * /admin/{userName}:
  *   put:
- *     summary: "Approves commercial users' information"
+ *     summary: "Promotes a user to commercial"
  *
  *     tags:
  *       - "admin"

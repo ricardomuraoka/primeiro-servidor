@@ -11,25 +11,19 @@ components:
       properties:
           name:
             type: string
-            example: The Big Cafe
+            example: Best Bar
           style:
             type: string
-            example: Coffee Shop
-          rating:
-            type: number
-            example: 4.0
-          comments:
-            type: string
-            example: "This place is great!"
+            example: Bar
           email:
             type: string
-            example: "greatplaceemail@email.com"
+            example: "bestbar@email.com"
           phone:
             type: string
             example: "+55 (41) 99999-9999"
           address:
             type: string
-            example: "123 Main St."
+            example: "Rua Best Bar, 123"
           city:
             type: string
             example: "Curitiba"
@@ -41,7 +35,7 @@ components:
             example: "80000-000"
           website:
             type: string
-            example: "greatplace.com"
+            example: "bestbar.com"
           open_monday:
             type: boolean
             example: false
