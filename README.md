@@ -59,6 +59,10 @@ npx prisma migrate dev
 npm start
 ```
 
+## Project TODOS
+
+Improve Error handling and validations
+
 
 
 
