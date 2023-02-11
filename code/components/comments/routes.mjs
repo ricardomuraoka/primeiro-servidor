@@ -8,7 +8,7 @@ import {createCommentService,
 /**
  * @openapi
  *
- * /comment/{establishmentName}:
+ * /comments/{establishmentName}:
  *   get:
  *     summary: "Retrieves Comments by establishment name"
  *
@@ -78,7 +78,7 @@ export async function get_comments_user(req, res, _) {
 /**
  * @openapi
  *
- * /comments/{establishmentName}:
+ * /comments/establishments/{establishmentName}:
  *   post:
  *     summary: "Creates a new comment"
  *
@@ -92,7 +92,7 @@ export async function get_comments_user(req, res, _) {
  *       - name: establishmentName
  *         in: path
  *         required: true
- *         description: "The name of the establishment to retrieve"
+ *         description: "The name of the establishment to create a post"
  *         schema:
  *           type: string
  *
@@ -113,6 +113,7 @@ export async function get_comments_user(req, res, _) {
  *       - JWT: ['USER']
  */
 export async function create_comment(req, res, _) {
+	console.log(req.body);
 	const data = req.body;
 	const { establishmentName } = req.params;
 	const userId = req.user.id;
