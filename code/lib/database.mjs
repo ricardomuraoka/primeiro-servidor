@@ -42,7 +42,7 @@ async function makeAdmin() {
         data: {
             username,
             password,
-            name: 'Music Server Administrator',
+            name: 'Administrator',
             roles: {
                 connect: [
                     {name: 'ADMIN'}, {name: 'COMMERCIAL'}, {name: 'USER'}
