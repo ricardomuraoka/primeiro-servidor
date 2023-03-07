@@ -8,7 +8,7 @@ import {createCommentService,
 /**
  * @openapi
  *
- * /comments/{establishmentName}:
+ * /comments/all/{establishmentName}:
  *   get:
  *     summary: "Retrieves Comments by establishment name"
  *

@@ -1,6 +1,6 @@
 import jwt from 'jwt-simple'
 
-const SECRET = "senha ultra secreta";
+const SECRET = "8y/B?E(H+MbQeThVmYq3t6w9z$C&F)J@";
 
 function dateToSec(date = new Date()) {
     return Math.floor(date.getTime() / 1000);
